@@ -240,14 +240,11 @@ procedure Setup_Pll is
       --  Must be done before increasing the frequency, otherwise the CPU
       --  won't be able to fetch new instructions.
 
-      FLASH_Periph.ACR.ICEN := 0;
-      FLASH_Periph.ACR.DCEN := 0;
-      FLASH_Periph.ACR.ICRST := 1;
-      FLASH_Periph.ACR.DCRST := 1;
+      FLASH_Periph.ACR.ARTEN := 0;
+      FLASH_Periph.ACR.ARTRST := 1;
       FLASH_Periph.ACR :=
         (LATENCY => FLASH_Latency,
-         ICEN    => 1,
-         DCEN    => 1,
+         ARTEN   => 1,
          PRFTEN  => 1,
          others  => <>);
 
