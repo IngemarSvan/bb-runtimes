@@ -488,6 +488,8 @@ class Stm32(ArmV7MTarget):
             self.mcu = 'stm32f7x'
         elif self.board == 'stm32f769disco':
             self.mcu = 'stm32f7x9'
+        elif self.board == 'stm32f7x6_WaveShare':
+            self.mcu = 'stm32f7x6'
         else:
             assert False, "Unknown stm32 board: %s" % self.board
 
@@ -532,6 +534,9 @@ class Stm32(ArmV7MTarget):
                 's-bbbopa.ads',
                 'arm/stm32/%s/s-bbbopa-stm32756geval.ads' % self.mcu)
         elif self.board == 'stm32f769disco':
+            self.add_sources('crt0', [
+                'arm/stm32/stm32f7x/s-stm32.adb'])
+        elif self.board == 'stm32f7x6_WaveShare':
             self.add_sources('crt0', [
                 'arm/stm32/stm32f7x/s-stm32.adb'])
 
