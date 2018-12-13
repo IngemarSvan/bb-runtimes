@@ -538,7 +538,7 @@ class Stm32(ArmV7MTarget):
                 'arm/stm32/stm32f7x/s-stm32.adb'])
         elif self.board == 'stm32f7x6_WaveShare':
             self.add_sources('crt0', [
-                'arm/stm32/stm32f7x/s-stm32.adb'])
+                'arm/stm32/stm32f7x6/s-stm32.adb'])
 
         # ravenscar support
         self.add_sources('gnarl', [

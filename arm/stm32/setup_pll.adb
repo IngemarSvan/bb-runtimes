@@ -102,7 +102,7 @@ procedure Setup_Pll is
                        else (if HSE_Enabled then SYSCLK_SRC_HSE
                              else SYSCLK_SRC_HSI));
       SW_Value    : constant CFGR_SW_Field :=
-                      SYSCLK_Source'Enum_Rep (SW);
+                     (As_Array => False, Val => SYSCLK_Source'Enum_Rep (SW));
 
       SYSCLK      : constant Integer := (if Activate_PLL
                                          then PLLCLKOUT
@@ -216,10 +216,10 @@ procedure Setup_Pll is
          --  Configure the PLL clock source, multiplication and division
          --  factors
          RCC_Periph.PLLCFGR :=
-           (PLLM   => PLLM,
-            PLLN   => PLLN,
-            PLLP   => PLLP,
-            PLLQ   => PLLQ,
+           (PLLM   => (As_Array => False, Val => PLLM),
+            PLLN   => (As_Array => False, Val => PLLN),
+            PLLP   => (As_Array => False, Val => PLLP),
+            PLLQ   => (As_Array => False, Val => PLLQ),
             PLLSRC => (if HSE_Enabled
                        then PLL_Source'Enum_Rep (PLL_SRC_HSE)
                        else PLL_Source'Enum_Rep (PLL_SRC_HSI)),
@@ -266,8 +266,8 @@ procedure Setup_Pll is
 
       if Activate_PLL then
          loop
-            exit when RCC_Periph.CFGR.SWS =
-              SYSCLK_Source'Enum_Rep (SYSCLK_SRC_PLL);
+            exit when RCC_Periph.CFGR.SWS.Val =
+               SYSCLK_Source'Enum_Rep (SYSCLK_SRC_PLL);
          end loop;
 
          --  Wait until voltage supply scaling has completed
@@ -288,7 +288,18 @@ procedure Setup_Pll is
       RCC_Periph.CR.HSION := 1;
 
       --  Reset CFGR regiser
-      RCC_Periph.CFGR := (others => <>);
+      --  RCC_Periph.CFGR := (others => <>);
+      RCC_Periph.CFGR.SW      := (As_Array => False, Val => 16#0#);
+      RCC_Periph.CFGR.SWS     := (As_Array => False, Val => 16#0#);
+      RCC_Periph.CFGR.HPRE    := 16#0#;
+      RCC_Periph.CFGR.Reserved_8_9 := 16#0#;
+      RCC_Periph.CFGR.PPRE    := (As_Array => False, Val => 16#0#);
+      RCC_Periph.CFGR.RTCPRE  := 16#0#;
+      RCC_Periph.CFGR.MCO1    := 16#0#;
+      RCC_Periph.CFGR.I2SSRC  := 16#0#;
+      RCC_Periph.CFGR.MCO1PRE := 16#0#;
+      RCC_Periph.CFGR.MCO2PRE := 16#0#;
+      RCC_Periph.CFGR.MCO2    := 16#0#;
 
       --  Reset HSEON, CSSON and PLLON bits
       RCC_Periph.CR.HSEON := 0;
