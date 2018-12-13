@@ -87,16 +87,16 @@ package Interfaces.STM32.GPIO is
       Reserved_16_31 at 0 range 16 .. 31;
    end record;
 
-   --  GPIOB_OSPEEDR_OSPEEDR array element
-   subtype GPIOB_OSPEEDR_OSPEEDR_Element is Interfaces.STM32.UInt2;
+   --  OSPEEDR_OSPEEDR array element
+   subtype OSPEEDR_OSPEEDR_Element is Interfaces.STM32.UInt2;
 
-   --  GPIOB_OSPEEDR_OSPEEDR array
-   type GPIOB_OSPEEDR_OSPEEDR_Field_Array is array (0 .. 15)
-     of GPIOB_OSPEEDR_OSPEEDR_Element
+   --  OSPEEDR_OSPEEDR array
+   type OSPEEDR_OSPEEDR_Field_Array is array (0 .. 15)
+     of OSPEEDR_OSPEEDR_Element
      with Component_Size => 2, Size => 32;
 
    --  GPIO port output speed register
-   type GPIOB_OSPEEDR_Register
+   type OSPEEDR_Register
      (As_Array : Boolean := False)
    is record
       case As_Array is
@@ -105,13 +105,13 @@ package Interfaces.STM32.GPIO is
             Val : Interfaces.STM32.UInt32;
          when True =>
             --  OSPEEDR as an array
-            Arr : GPIOB_OSPEEDR_OSPEEDR_Field_Array;
+            Arr : OSPEEDR_OSPEEDR_Field_Array;
       end case;
    end record
      with Unchecked_Union, Size => 32, Volatile_Full_Access,
           Bit_Order => System.Low_Order_First;
 
-   for GPIOB_OSPEEDR_Register use record
+   for OSPEEDR_Register use record
       Val at 0 range 0 .. 31;
       Arr at 0 range 0 .. 31;
    end record;
@@ -453,7 +453,7 @@ package Interfaces.STM32.GPIO is
       --  GPIO port output type register
       OTYPER        : aliased OTYPER_Register;
       --  GPIO port output speed register
-      GPIOB_OSPEEDR : aliased GPIOB_OSPEEDR_Register;
+      OSPEEDR       : aliased OSPEEDR_Register;
       --  GPIO port pull-up/pull-down register
       PUPDR         : aliased PUPDR_Register;
       --  GPIO port input data register
@@ -476,7 +476,7 @@ package Interfaces.STM32.GPIO is
    for GPIO_Peripheral use record
       MODER         at 16#0# range 0 .. 31;
       OTYPER        at 16#4# range 0 .. 31;
-      GPIOB_OSPEEDR at 16#8# range 0 .. 31;
+      OSPEEDR       at 16#8# range 0 .. 31;
       PUPDR         at 16#C# range 0 .. 31;
       IDR           at 16#10# range 0 .. 31;
       ODR           at 16#14# range 0 .. 31;
