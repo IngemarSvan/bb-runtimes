@@ -77,8 +77,10 @@ class RTSProfiles(object):
 
         if self.config.use_semihosting_io:
             ret['Text_IO'] = 'semihosting'
+            ret['Use_Semihosting_IO'] = 'yes'
         else:
             ret['Text_IO'] = 'serial'
+            ret['Use_Semihosting_IO'] = 'no'
 
         if not self.config.is_pikeos:
             if self.config.has_small_memory:
